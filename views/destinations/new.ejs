@@ -1,0 +1,27 @@
+<%- include('../partials/header.ejs') %>
+
+  <section>
+    <h1>Add Destination</h1>
+
+    <% if (err !== null) { %>
+      <p>Invalid Entry</p>
+    <% } %>
+
+    <form action="/destinations" method="POST"> 
+      <label>Airport:</label>
+      <input type="text" required name="airport" autocomplete="off">
+      <button type="submit">Submit</button>
+    </form>
+
+    <h1>Existing Destinations:</h1>
+    <% if (destinations) { %>
+      <select>
+          <% destinations.forEach(function(destination) { %>
+              <option><%= destination.airport %></option>
+          <% }) %>
+      </select>
+    <% } %>
+
+  </section>
+
+  <%- include('../partials/footer.ejs') %>

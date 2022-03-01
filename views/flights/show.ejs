@@ -1,0 +1,95 @@
+<%- include('../partials/header.ejs') %>
+
+  <section>
+    <h1>Flight Details</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Airline </th>
+          <th>Airport </th>
+          <th>FlightNo </th>
+          <th>Departure </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <%= flight.airline %>
+          </td>
+          <td>
+            <%= flight.airport %>
+          </td>
+          <td>
+            <%= flight.flightNo %>
+          </td>
+          <td class="<%= flight.class %>">
+            <%= flight.departs %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <h1>Tickets</h1>
+    <div>
+      <% if (flight.tickets){ %>
+        <% flight.tickets.forEach((ticket)=> { %>
+          <div>
+            <%= ticket.seat %>
+            <%= ticket.price %>
+            <form action="/flights/<%=flight._id%>/tickets/<%=ticket._id%>?_method=DELETE" method="POST">
+              <button type="submit">Delete</button>
+            </form>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <h3>No Tickets</h3>
+      <% } %>
+    </div>
+
+    <h1>Current Destinations</h1>
+    <div>
+      <% if (flight.destinations.length){ %>
+        <% flight.destinations.forEach((destination)=> { %>
+          <div>
+            <p>
+              <%= destination.airport  %> 
+            </p>
+            <form action="/flights/<%=flight._id%>/destinations/<%=destination._id%>?_method=DELETE" method="POST">
+              <button type="submit">Delete</button>
+            </form>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <h4>No Destinations</h4>
+      <% } %>
+    </div>
+
+
+
+    <h1>Add a Destination</h1>
+    <form action="/flights/<%= flight._id %>/destinations" method="POST">
+      <select required name="destinationId">
+        <% destinations.forEach(function(destination) { %>
+          <option value="<%= destination._id %>">
+            <%= destination.airport %>
+          </option>
+        <% }) %>
+      </select>
+      <button type="submit">Add Destination</button>
+    </form>
+
+
+    <h1>Add a Ticket</h1>
+    <form action="/flights/<%= flight._id %>/tickets" method="POST">
+      <label>Seat:</label>
+      <input required type="text" placeholder="A1 through F99" name="seat" pattern="[A-F][1-9]\d?">
+      <label>Price:</label>
+      <input required type="number" placeholder="$0" name="price" min=0>
+      <button type="submit">Submit</button>
+    </form>
+
+
+  </section>
+
+  <%- include('../partials/footer.ejs') %>
