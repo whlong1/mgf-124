@@ -1,14 +1,16 @@
 <%- include('../partials/header.ejs') %>
 
   <section>
-    <div style="display: flex; align-items: center;">
-      <h1 style="margin-right: 64px;">Flight Details</h1>
-      <a href="/flights/<%= flight._id %>/edit" style="margin-right: 16px;">
-        <button>Edit Flight</button>
-      </a>
-      <form action="/flights/<%=flight._id%>?_method=DELETE" method="POST">
-        <button type="submit">Delete</button>
-      </form>
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <h1 style="margin-right: 16px;">Flight Details</h1>
+      <div style="display: flex; align-items: center;">
+        <a href="/flights/<%= flight._id %>/edit" style="margin-right: 16px;">
+          <button>Edit Flight</button>
+        </a>
+        <form action="/flights/<%=flight._id%>?_method=DELETE" method="POST">
+          <button type="submit">Delete Flight</button>
+        </form>
+      </div>
     </div>
 
     <table>
@@ -38,13 +40,16 @@
       </tbody>
     </table>
 
-    <h1>Tickets</h1>
+    <h1>Tickets:</h1>
     <div>
       <% if (flight.tickets){ %>
         <% flight.tickets.forEach((ticket)=> { %>
-          <div style="display: flex; align-items: center;">
-            <%= ticket.seat %>
-            <%= ticket.price %>
+          <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid grey;">
+            <p>
+              <%= ticket.seat %>
+              <%= ticket.price %>
+
+            </p>
             <form action="/flights/<%=flight._id%>/tickets/<%=ticket._id%>?_method=DELETE" method="POST">
               <button type="submit">Delete</button>
             </form>
@@ -55,11 +60,20 @@
       <% } %>
     </div>
 
-    <h1>Current Meals</h1>
+    <h1>Add a Ticket</h1>
+    <form action="/flights/<%= flight._id %>/tickets" method="POST" style="display: flex; flex-direction: column;">
+      <label style="margin-top: 5px;">Seat:</label>
+      <input style="margin-top: 5px; padding: 5px;" required type="text" placeholder="A1 through F99" name="seat" pattern="[A-F][1-9]\d?">
+      <label style="margin-top: 5px;">Price:</label>
+      <input style="margin-top: 5px; padding: 5px;" required type="number" placeholder="$0" name="price" min=0>
+      <button style="margin-top: 10px; padding: 5px;" type="submit">Submit</button>
+    </form>
+
+    <h1>Current Meals:</h1>
     <div>
       <% if (flight.meals.length){ %>
         <% flight.meals.forEach((meal)=> { %>
-          <div style="display: flex; align-items: center;">
+          <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid grey;">
             <p>
               <%= meal.name %> 
             </p>
@@ -74,25 +88,15 @@
     </div>
 
     <h1>Add a Meal</h1>
-    <form action="/flights/<%= flight._id %>/meals" method="POST">
-      <select required name="mealId">
+    <form action="/flights/<%= flight._id %>/meals" method="POST" style="display: flex; flex-direction: column;">
+      <select style="margin-top: 5px; padding: 5px;" required name="mealId">
         <% meals.forEach(function(meal) { %>
           <option value="<%= meal._id %>">
             <%= meal.name %>
           </option>
         <% }) %>
       </select>
-      <button type="submit">Add Meal</button>
-    </form>
-
-
-    <h1>Add a Ticket</h1>
-    <form action="/flights/<%= flight._id %>/tickets" method="POST">
-      <label>Seat:</label>
-      <input required type="text" placeholder="A1 through F99" name="seat" pattern="[A-F][1-9]\d?">
-      <label>Price:</label>
-      <input required type="number" placeholder="$0" name="price" min=0>
-      <button type="submit">Submit</button>
+      <button style="margin-top: 10px; padding: 5px;" type="submit">Add Meal</button>
     </form>
 
 
