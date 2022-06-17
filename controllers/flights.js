@@ -138,6 +138,42 @@ function removeMeal(req, res) {
 }
 
 
+function edit(req, res) {
+  console.log('HI')
+
+  const newFlight = new Flight()
+  const defaultDate = newFlight.departs // Obtain the default date
+  const formattedDate = defaultDate.toISOString().slice(0, 16) 
+
+  Flight.findById(req.params.id)
+    .then((flight) => {
+      // flight.departs = flight.departs.toISOString().slice(0, 16)
+      // const date = flight.departs.toISOString().slice(0, 16)
+      // console.log(flight.departs.toISOString().slice(0, 16))
+      res.render('flights/edit', {
+        flight: flight,
+        date: formattedDate
+      })
+    })
+    .catch((error) => {
+      console.log(error)
+      res.redirect('/skills')
+    })
+}
+
+function update(req, res) {
+  // req.body.learned = !!req.body.learned
+  Flight.findByIdAndUpdate(req.params.id, req.body)
+    .then((skill) => {
+      res.redirect(`/flights/${req.params.id}`)
+    })
+    .catch((error) => {
+      console.log(error)
+      res.redirect('/flights')
+    })
+}
+
+
 
 
 export {
@@ -150,6 +186,8 @@ export {
   deleteTicket,
   addMealToFlight,
   removeMeal,
+  edit,
+  update
 }
 
 

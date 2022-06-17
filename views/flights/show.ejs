@@ -1,7 +1,16 @@
 <%- include('../partials/header.ejs') %>
 
   <section>
-    <h1>Flight Details</h1>
+    <div style="display: flex; align-items: center;">
+      <h1 style="margin-right: 64px;">Flight Details</h1>
+      <a href="/flights/<%= flight._id %>/edit" style="margin-right: 16px;">
+        <button>Edit Flight</button>
+      </a>
+      <form action="/flights/<%=flight._id%>?_method=DELETE" method="POST">
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+
     <table>
       <thead>
         <tr>
@@ -29,12 +38,11 @@
       </tbody>
     </table>
 
-
     <h1>Tickets</h1>
     <div>
       <% if (flight.tickets){ %>
         <% flight.tickets.forEach((ticket)=> { %>
-          <div>
+          <div style="display: flex; align-items: center;">
             <%= ticket.seat %>
             <%= ticket.price %>
             <form action="/flights/<%=flight._id%>/tickets/<%=ticket._id%>?_method=DELETE" method="POST">
@@ -51,7 +59,7 @@
     <div>
       <% if (flight.meals.length){ %>
         <% flight.meals.forEach((meal)=> { %>
-          <div>
+          <div style="display: flex; align-items: center;">
             <p>
               <%= meal.name %> 
             </p>
