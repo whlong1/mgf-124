@@ -47,8 +47,8 @@
           <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid grey;">
             <p>
               <%= ticket.seat %>
-              <%= ticket.price %>
-
+              -
+              $<%= ticket.price %>
             </p>
             <form action="/flights/<%=flight._id%>/tickets/<%=ticket._id%>?_method=DELETE" method="POST">
               <button type="submit">Delete</button>
