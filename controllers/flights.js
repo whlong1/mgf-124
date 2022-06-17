@@ -162,9 +162,8 @@ function edit(req, res) {
 }
 
 function update(req, res) {
-  // req.body.learned = !!req.body.learned
   Flight.findByIdAndUpdate(req.params.id, req.body)
-    .then((skill) => {
+    .then((flight) => {
       res.redirect(`/flights/${req.params.id}`)
     })
     .catch((error) => {

@@ -3,7 +3,7 @@
   <section>
     <h1>Edit a Flight</h1>
 
-    <form class="flight-form" action="/flights" method="POST">
+    <form class="flight-form" action="/flights/<%= flight._id %>?_method=PUT" method="POST">
 
       <label>Airline:</label>
       <select name="airline">
