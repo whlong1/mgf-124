@@ -47,36 +47,41 @@
       <% } %>
     </div>
 
-    <h1>Current Destinations</h1>
+    <h1>Current Meals</h1>
     <div>
-      <% if (flight.destinations.length){ %>
-        <% flight.destinations.forEach((destination)=> { %>
+      <% if (flight.meals.length){ %>
+        <% flight.meals.forEach((meal)=> { %>
           <div>
             <p>
-              <%= destination.airport  %> 
+              <%= meal.name %> 
             </p>
-            <form action="/flights/<%=flight._id%>/destinations/<%=destination._id%>?_method=DELETE" method="POST">
+            <form action="/flights/<%=flight._id%>/meals/<%=meal._id%>?_method=DELETE" method="POST">
               <button type="submit">Delete</button>
             </form>
           </div>
         <% }) %>
       <% } else { %>
-        <h4>No Destinations</h4>
+        <h4>No Meals</h4>
       <% } %>
     </div>
 
 
+    <% if (number === 1) { %>
+      ⭑
+    <% } %>
+    
 
-    <h1>Add a Destination</h1>
-    <form action="/flights/<%= flight._id %>/destinations" method="POST">
-      <select required name="destinationId">
-        <% destinations.forEach(function(destination) { %>
-          <option value="<%= destination._id %>">
-            <%= destination.airport %>
+
+    <h1>Add a Meal</h1>
+    <form action="/flights/<%= flight._id %>/meals" method="POST">
+      <select required name="mealId">
+        <% meals.forEach(function(meal) { %>
+          <option value="<%= meal._id %>">
+            <%= meal.name %>
           </option>
         <% }) %>
       </select>
-      <button type="submit">Add Destination</button>
+      <button type="submit">Add Meal</button>
     </form>
 
 

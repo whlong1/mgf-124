@@ -11,12 +11,13 @@ router.post('/:id/tickets', flightsCtrl.createTicket)
 router.delete('/:id', flightsCtrl.delete)
 router.delete('/:flightId/tickets/:ticketId', flightsCtrl.deleteTicket)
 
-//addToFlight, addToDestinations
-//router.post("/:id/performers", moviesCtrl.addToCast)
-router.post('/:id/destinations', flightsCtrl.addDestinationToFlight)
-router.delete('/:id/destinations/:destinationId', flightsCtrl.removeDestination)
+
+router.post('/:id/meals', flightsCtrl.addMealToFlight)
+router.delete('/:id/meals/:mealId', flightsCtrl.removeMeal)
+
 
 
 export {
   router
 }
+

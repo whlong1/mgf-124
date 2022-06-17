@@ -23,29 +23,26 @@ const flightSchema = new mongoose.Schema({
 		enum: ['AUS', 'DFW', 'DEN', 'LAX', 'SAN'],
 		default: 'DEN'
 	},
-	flightNo: {
-		type: Number,
-		min: 10,
-		max: 9999,
-		required: true,
-	},
+	flightNo: { type: Number, min: 10, max: 9999, required: true },
 	monday: [String],
 	departs: {
 		type: Date,
 		default: function () {
-			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
-			// A. new Date object set to time of creation || B. look at year and add 1 || C. Update OG obj year
-			const today = new Date() //=> 2021-10-29T12:07:43.072Z
-			const oneYearFromNow = today.getFullYear() + 1 //=> 2022
-			today.setFullYear(oneYearFromNow) //=> 2022-10-29T12:13:04.759Z
+			// A. new Date object set to time of creation
+			const today = new Date() // output: 2021-10-29T12:07:43.072Z
+			// B. look at year and add 1 
+			const oneYearFromNow = today.getFullYear() + 1 // output: => 2022
+			// C. Update OG obj year
+			today.setFullYear(oneYearFromNow) // output: => 2022-10-29T12:13:04.759Z
 			return today
 		},
 	},
 	tickets: [ticketSchema],
-	destinations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Destination' }]
+	meals: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Meal' }]
 }, { timestamps: true })
 
 const Flight = mongoose.model('Flight', flightSchema)
+
 
 export {
 	Flight

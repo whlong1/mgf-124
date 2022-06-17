@@ -1,4 +1,4 @@
-import { Destination } from '../models/destination.js'
+import { Meal } from '../models/meal.js'
 
 //========================================================================================================
 
@@ -13,24 +13,48 @@ import { Destination } from '../models/destination.js'
 // Accessible through req.query.error
 // The '?' initiates the query string
 
-function newDestination(req, res) {
-  Destination.find({}, function (err, destinations) {
-    res.render("destinations/new", {
-      destinations: destinations,
+function newMeal(req, res) {
+  Meal.find({}, function (err, meals) {
+    res.render("meals/new", {
+      meals: meals,
       err: req.query.error ? req.query.error : err
     })
   })
 }
 
 function create(req, res) {
-  Destination.create(req.body, function (err) {
-    if (err) {
-      res.redirect(`/destinations/new?error=true`)
+  Meal.find({ name: req.body.name }, function (err, meal) {
+    if (Object.values(meal).length) {
+      console.log('HIT', Object.values(meal).length)
+      res.redirect(`/meals/new?error=true`)
     } else {
-      res.redirect('/destinations/new')
+      Meal.create(req.body, function (err) {
+        if (err) {
+          res.redirect(`/meals/new?error=true`)
+        } else {
+          res.redirect('/meals/new')
+        }
+      })
     }
   })
 }
+
+
+
+
+// function create(req, res) {
+//   Destination.create(req.body, function (err, destination) {
+//     if (err) {
+//       return Destination.find({}, function (err, destinations) {
+//         res.render("destinations/new", {
+//           destinations: destinations,
+//           err: true
+//         })
+//       })
+//     }
+//     res.redirect('/destinations/new')
+//   })
+// }
 
 //========================================================================================================
 // METHOD 2
@@ -94,7 +118,7 @@ function create(req, res) {
 
 
 export {
-  newDestination as new,
+  newMeal as new,
   create
 }
 
