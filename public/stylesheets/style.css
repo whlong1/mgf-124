@@ -28,3 +28,18 @@ th, td {
 table {
   width: 100%;
 }
+
+input, select {
+  margin-top: 5px;
+  padding: 5px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
