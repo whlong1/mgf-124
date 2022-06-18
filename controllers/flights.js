@@ -1,7 +1,6 @@
 import { Flight } from '../models/flight.js'
 import { Meal } from '../models/meal.js'
 
-
 function index(req, res) {
   Flight.find({}) //find all flights
     .sort({ departs: 'asc' }) // sort method accepts field and sorting value
@@ -20,8 +19,6 @@ function index(req, res) {
       })
     })
 }
-
-
 
 function newFlight(req, res) {
   // To display default date in flights/new derpature input, need to pass default flight date
@@ -139,17 +136,12 @@ function removeMeal(req, res) {
 
 
 function edit(req, res) {
-  console.log('HI')
-
   const newFlight = new Flight()
   const defaultDate = newFlight.departs // Obtain the default date
   const formattedDate = defaultDate.toISOString().slice(0, 16) 
 
   Flight.findById(req.params.id)
     .then((flight) => {
-      // flight.departs = flight.departs.toISOString().slice(0, 16)
-      // const date = flight.departs.toISOString().slice(0, 16)
-      // console.log(flight.departs.toISOString().slice(0, 16))
       res.render('flights/edit', {
         flight: flight,
         date: formattedDate
@@ -171,8 +163,6 @@ function update(req, res) {
       res.redirect('/flights')
     })
 }
-
-
 
 
 export {
