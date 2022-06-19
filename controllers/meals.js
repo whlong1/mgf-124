@@ -5,7 +5,6 @@ import { Meal } from '../models/meal.js'
 // list of destinations should be displayed below the form to prevent the user from entering duplicates. 
 // include a query for ALL destinations to show them on the page
 
-
 // 'unique: true' property has been applied to the destination schema
 // If a user enters an existing airport, err will evaluate to true
 // and the user will be redirected to /destinations/new?error=true
@@ -38,9 +37,6 @@ function create(req, res) {
     }
   })
 }
-
-
-
 
 // function create(req, res) {
 //   Destination.create(req.body, function (err, destination) {
@@ -113,9 +109,6 @@ function create(req, res) {
 //     }
 //   })
 // }
-
-
-
 
 export {
   newMeal as new,

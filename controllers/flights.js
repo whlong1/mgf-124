@@ -10,6 +10,7 @@ function index(req, res) {
         // if departure takes place before this moment in time
         if (flight.departs?.toISOString() < new Date().toISOString()) {
           flight.class = 'red' // add a temp class property
+          flight.color = 'red'
         }
       })
       res.render('flights/index', {
@@ -105,14 +106,11 @@ function deleteTicket(req, res) {
   })
 }
 
-
-
 function deleteFlight(req, res) {
   Flight.findByIdAndDelete(req.params.id, function (err, flight) {
     res.redirect(`/flights`)
   })
 }
-
 
 function addMealToFlight(req, res) {
   Flight.findById(req.params.id, (err, flight) => {
@@ -123,8 +121,6 @@ function addMealToFlight(req, res) {
   })
 }
 
-
-
 function removeMeal(req, res) {
   Flight.findById(req.params.id, (err, flight) => {
     flight.meals.remove({ _id: req.params.mealId })
@@ -133,7 +129,6 @@ function removeMeal(req, res) {
     })
   })
 }
-
 
 function edit(req, res) {
   const newFlight = new Flight()
