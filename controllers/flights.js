@@ -2,19 +2,13 @@ import { Flight } from '../models/flight.js'
 import { Meal } from '../models/meal.js'
 
 function index(req, res) {
-  Flight.find({}) //find all flights
-    .sort({ departs: 'asc' }) // sort method accepts field and sorting value
-    .exec(function (err, flights) { // execute callback function
-      //append class 
-      flights.forEach(function (flight) { // look at each flight
-        // if departure takes place before this moment in time
-        if (flight.departs?.toISOString() < new Date().toISOString()) {
-          flight.class = 'red' // add a temp class property
-          flight.color = 'red'
-        }
+  Flight.find({}).sort({ departs: 'asc' })
+    .then((flights) => {
+      flights.forEach(function (flight) {
+        // if departure takes place before this moment in time:
+        if (flight.departs.toISOString() < new Date().toISOString()) flight.class = 'red'
       })
       res.render('flights/index', {
-        err: err,
         flights: flights,
         title: 'All Flights'
       })
@@ -38,6 +32,9 @@ function newFlight(req, res) {
   // const defaultDate = today.setFullYear(oneYearFromNow) // update year in
   // console.log('defaultDate', defaultDate)
   // const formattedDate = new Date(defaultDate).toISOString().slice(0, 16)
+
+
+  // usaTime = date.toLocaleString("en-US", {timeZone: "America/New_York"});
 
 
   res.render("flights/new", { // render new flight form
@@ -82,8 +79,6 @@ function show(req, res) {
     })
   })
 }
-
-
 
 function createTicket(req, res) {
   Flight.findById(req.params.id, function (err, flight) {
@@ -131,15 +126,10 @@ function removeMeal(req, res) {
 }
 
 function edit(req, res) {
-  const newFlight = new Flight()
-  const defaultDate = newFlight.departs // Obtain the default date
-  const formattedDate = defaultDate.toISOString().slice(0, 16) 
-
   Flight.findById(req.params.id)
     .then((flight) => {
       res.render('flights/edit', {
-        flight: flight,
-        date: formattedDate
+        flight: flight
       })
     })
     .catch((error) => {
@@ -173,9 +163,6 @@ export {
   edit,
   update
 }
-
-
-
 
 
 

@@ -7,9 +7,9 @@
 
       <label>Airline:</label>
       <select name="airline">
-        <option <%= flight.airline==='American' ? 'selected' : '' %> value="American">American</option>
-        <option <%= flight.airline==='Southwest' ? 'selected' : '' %> value="Southwest">South West</option>
-        <option <%= flight.airline==='United' ? 'selected' : '' %> value="United">United</option>
+        <option <%= flight.airline ==='American' ? 'selected' : '' %> value="American">American</option>
+        <option <%= flight.airline ==='Southwest' ? 'selected' : '' %> value="Southwest">South West</option>
+        <option <%= flight.airline ==='United' ? 'selected' : '' %> value="United">United</option>
       </select>
 
       <span>Airport:</span>
@@ -25,7 +25,7 @@
       <input type="number" min="10" max="9999" type="number" name="flightNo" autocomplete="off" value="<%= flight.flightNo %>">
 
       <span>Departure:</span>
-      <input required type="datetime-local" name="departs" value="<%= date %>">
+      <input required type="datetime-local" name="departs" value="<%= flight.departs.toISOString().slice(0, 16) %>">
 
       <button style="margin-top: 10px; padding: 5px;" type="submit">Book Flight</button>
 
