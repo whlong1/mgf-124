@@ -19,7 +19,7 @@
 
         <tbody>
           <% flights.forEach(function(flight){ %>
-            <tr>
+            <tr class="<%= flight.class %>">
               <td>
                 <%= flight.airline %>
               </td>
@@ -29,7 +29,7 @@
               <td>
                 <%= flight.flightNo %>
               </td>
-              <td class="<%= flight.class %>">
+              <td>
                 <%= flight.departs %>
               </td>
               <td><a href="/flights/<%=flight._id%>">Details</a></td>

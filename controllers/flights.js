@@ -6,6 +6,7 @@ function index(req, res) {
     .then((flights) => {
       flights.forEach(function (flight) {
         // if departure takes place before this moment in time:
+        console.log(flight.departs.toISOString() < new Date().toISOString())
         if (flight.departs.toISOString() < new Date().toISOString()) flight.class = 'red'
       })
       res.render('flights/index', {
@@ -25,7 +26,7 @@ function newFlight(req, res) {
   const defaultDate = newFlight.departs // Obtain the default date
   const formattedDate = defaultDate.toISOString().slice(0, 16) // Format the date for the value attribute of the input
 
-  console.log(defaultDate)
+  console.log(defaultDate.toLocal)
   console.log(formattedDate)
 
   res.render("flights/new", { // render new flight form
@@ -46,73 +47,27 @@ function create(req, res) {
     })
 }
 
-
-//Meal.find - find all the Meals not currently in flight.Meals
-//pass that in to create a list of Meals that can be added to a flight
-//We have already found the flight, which contains a list of Meal ids
-//this allows use to display potential and existing Meals on the same page, without overlap
-
-
 function show(req, res) {
   Flight.findById(req.params.id).populate('meals')
-  .then((flight)=> {
-    Meal.find({ _id: { $nin: flight.meals } })
-    .then((meals) => {
-      res.render('flights/show', {
-        flight: flight,
-        meals: meals,
-      })
-    })
-  })
-  .catch((err)=> {
-    console.log(err)
-  })
-}
-
-function createTicket(req, res) {
-  Flight.findById(req.params.id)
     .then((flight) => {
-      flight.tickets.push(req.body)
-      flight.save().then((flight) => res.redirect(`/flights/${flight._id}`))
-    }).catch((err) => {
-      res.render('/flights/new')
+      Meal.find({ _id: { $nin: flight.meals } })
+        .then((meals) => {
+          res.render('flights/show', {
+            flight: flight,
+            meals: meals,
+          })
+        })
     })
-}
-
-// DELETE	/blogs/:blogId/comments/:commentId	Delete specified comment
-function deleteTicket(req, res) {
-  Flight.findById(req.params.flightId, function (err, flight) {
-    flight.tickets.remove({ _id: req.params.ticketId })
-    flight.save(function (err) {
-      if (err) return res.redirect(`/flights/${flight._id}`)
-      res.redirect(`/flights/${flight._id}`)
+    .catch((err) => {
+      console.log(err)
     })
-  })
 }
 
 function deleteFlight(req, res) {
   Flight.findByIdAndDelete(req.params.id)
-  .then((flight) => {
-    res.redirect(`/flights`)
-  })
-}
-
-function addMealToFlight(req, res) {
-  Flight.findById(req.params.id, (err, flight) => {
-    flight.meals.push(req.body.mealId)
-    flight.save(function (err) {
-      res.redirect(`/flights/${flight._id}`)
+    .then((flight) => {
+      res.redirect(`/flights`)
     })
-  })
-}
-
-function removeMeal(req, res) {
-  Flight.findById(req.params.id, (err, flight) => {
-    flight.meals.remove({ _id: req.params.mealId })
-    flight.save(function (err) {
-      res.redirect(`/flights/${flight._id}`)
-    })
-  })
 }
 
 function edit(req, res) {
@@ -137,6 +92,46 @@ function update(req, res) {
       console.log(error)
       res.redirect('/flights')
     })
+}
+
+function addMealToFlight(req, res) {
+  Flight.findById(req.params.id, (err, flight) => {
+    flight.meals.push(req.body.mealId)
+    flight.save(function (err) {
+      res.redirect(`/flights/${flight._id}`)
+    })
+  })
+}
+
+function removeMeal(req, res) {
+  Flight.findById(req.params.id, (err, flight) => {
+    flight.meals.remove({ _id: req.params.mealId })
+    flight.save(function (err) {
+      res.redirect(`/flights/${flight._id}`)
+    })
+  })
+}
+
+function createTicket(req, res) {
+  Flight.findById(req.params.id)
+    .then((flight) => {
+      flight.tickets.push(req.body)
+      flight.save().then((flight) => res.redirect(`/flights/${flight._id}`))
+    }).catch((err) => {
+      res.render('/flights')
+    })
+}
+
+
+// DELETE	/blogs/:blogId/comments/:commentId	Delete specified comment
+function deleteTicket(req, res) {
+  Flight.findById(req.params.flightId, function (err, flight) {
+    flight.tickets.remove({ _id: req.params.ticketId })
+    flight.save(function (err) {
+      if (err) return res.redirect(`/flights/${flight._id}`)
+      res.redirect(`/flights/${flight._id}`)
+    })
+  })
 }
 
 

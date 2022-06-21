@@ -1,5 +1,14 @@
 # mgf-124
 
+<%- include('../partials/html-head') %>
+<link rel="stylesheet" href="/stylesheets/movies/edit.css" />
+<%- include('../partials/nav') %>
+
+1. Determine the “proper” route (HTTP Method & Endpoint). Use RESTful conventions whenever possible.
+2. Add the UI (link or form) that triggers the HTTP request that matches the route.
+3. Define the route in the appropriate router module that will match the HTTP request and map it to the `<controller>.<method>` that will perform the desired functionality.
+4. Add the controller action/method, and be sure to export it.
+5. In the controller, perform the necessary CRUD action. Then either `render` (passing it data) in the case of a `GET` request or `redirect` if data has been mutated (`POST`, `PUT` & `DELETE`). If rendering, code the view template if necessary.
 
 # Part One
 
@@ -30,7 +39,7 @@
 
 • display default departure date when creating new flight
 
-• view flights in ascending order
+• view flights in ascending order (begins with the least or smallest and ends with the greatest or largest)
 
 • red when departure has passed
 

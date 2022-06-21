@@ -3,8 +3,8 @@
   <section>
     <h1>Add Meal</h1>
 
-    <% if (err !== null) { %>
-      <p>Invalid Entry</p>
+    <% if (err) { %>
+      <p><%=err%></p>
     <% } %>
 
     <form action="/meals" method="POST"> 
