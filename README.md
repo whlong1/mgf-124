@@ -1,9 +1,5 @@
 # mgf-124
 
-<%- include('../partials/html-head') %>
-<link rel="stylesheet" href="/stylesheets/movies/edit.css" />
-<%- include('../partials/nav') %>
-
 1. Determine the “proper” route (HTTP Method & Endpoint). Use RESTful conventions whenever possible.
 2. Add the UI (link or form) that triggers the HTTP request that matches the route.
 3. Define the route in the appropriate router module that will match the HTTP request and map it to the `<controller>.<method>` that will perform the desired functionality.
