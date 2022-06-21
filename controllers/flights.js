@@ -25,17 +25,8 @@ function newFlight(req, res) {
   const defaultDate = newFlight.departs // Obtain the default date
   const formattedDate = defaultDate.toISOString().slice(0, 16) // Format the date for the value attribute of the input
 
-  // 2. Using a new date
-  // const today = new Date() // find current date
-  // console.log('today', today)
-  // const oneYearFromNow = today.getFullYear() + 1 // get/isolate the year add 1 to it. Expected output => 2022
-  // const defaultDate = today.setFullYear(oneYearFromNow) // update year in
-  // console.log('defaultDate', defaultDate)
-  // const formattedDate = new Date(defaultDate).toISOString().slice(0, 16)
-
-
-  // usaTime = date.toLocaleString("en-US", {timeZone: "America/New_York"});
-
+  console.log(defaultDate)
+  console.log(formattedDate)
 
   res.render("flights/new", { // render new flight form
     // we need to format the date for type="datetime-local"
@@ -46,19 +37,14 @@ function newFlight(req, res) {
 
 function create(req, res) {
   for (let key in req.body) { if (req.body[key] === '') delete req.body[key] }
-  Flight.create(req.body, function (err, flight) {
-    if (err) return res.redirect(`/flights/new`)
-    res.redirect(`/flights`)
-  })
+  Flight.create(req.body)
+    .then((flight) => {
+      res.redirect(`/flights`)
+    })
+    .catch((err) => {
+      if (err) return res.redirect(`/flights/new`)
+    })
 }
-
-// function create(req, res) {
-//   const flight = new Flight(req.body)
-//   flight.save((err) => {
-//     console.log(err)
-//     res.redirect('/flights')
-//   })
-// }
 
 
 //Meal.find - find all the Meals not currently in flight.Meals
