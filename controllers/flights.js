@@ -81,13 +81,13 @@ function show(req, res) {
 }
 
 function createTicket(req, res) {
-  Flight.findById(req.params.id, function (err, flight) {
-    flight.tickets.push(req.body)
-    flight.save((err) => {
-      if (err) return res.render('/flights/new')
-      res.redirect(`/flights/${flight._id}`)
+  Flight.findById(req.params.id)
+    .then((flight) => {
+      flight.tickets.push(req.body)
+      flight.save().then((flight) => res.redirect(`/flights/${flight._id}`))
+    }).catch((err) => {
+      res.render('/flights/new')
     })
-  })
 }
 
 // DELETE	/blogs/:blogId/comments/:commentId	Delete specified comment
