@@ -54,15 +54,18 @@ function create(req, res) {
 
 
 function show(req, res) {
-  Flight.findById(req.params.id).populate('meals').exec(function (err, flight) {
-    Meal.find({ _id: { $nin: flight.meals } }, (err, meals) => {
+  Flight.findById(req.params.id).populate('meals')
+  .then((flight)=> {
+    Meal.find({ _id: { $nin: flight.meals } })
+    .then((meals) => {
       res.render('flights/show', {
         flight: flight,
-        err: err,
         meals: meals,
-        number: 1
       })
     })
+  })
+  .catch((err)=> {
+    console.log(err)
   })
 }
 
@@ -88,7 +91,8 @@ function deleteTicket(req, res) {
 }
 
 function deleteFlight(req, res) {
-  Flight.findByIdAndDelete(req.params.id, function (err, flight) {
+  Flight.findByIdAndDelete(req.params.id)
+  .then((flight) => {
     res.redirect(`/flights`)
   })
 }
