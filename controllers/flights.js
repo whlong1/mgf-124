@@ -125,12 +125,13 @@ function createTicket(req, res) {
 
 // DELETE	/blogs/:blogId/comments/:commentId	Delete specified comment
 function deleteTicket(req, res) {
-  Flight.findById(req.params.flightId, function (err, flight) {
+  Flight.findById(req.params.flightId)
+  .then((flight)=> {
     flight.tickets.remove({ _id: req.params.ticketId })
-    flight.save(function (err) {
-      if (err) return res.redirect(`/flights/${flight._id}`)
-      res.redirect(`/flights/${flight._id}`)
-    })
+    flight.save().then((flight) => res.redirect(`/flights/${flight._id}`))
+  })
+  .catch((err) => {
+    res.redirect(`/flights/${flight._id}`)
   })
 }
 

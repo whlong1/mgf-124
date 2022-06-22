@@ -43,6 +43,10 @@
 
 # Part Two
 
+Subdocuments are very similar to regular documents. The difference is that they are not saved directly - but instead when the document they are embedded within is saved.
+
+Subdocuments have their own **schema**, but since subdocuments are not saved to a collection, we **do not compile a subdocument’s schema into a Model**
+
 ## Requirements
 
 • create a ticket schema (seat, price)
@@ -58,6 +62,17 @@
 ## Hints
 
 • regular expression
+
+Short for regular expression, a regex is a string of text that allows you to create patterns that help match, locate, and manage text.
+
+[A-F][1-9]\d?
+first character range - A through F
+second character range - 1 through 9
+third character range - 0 through 9
+question mark makes the last character optional
+
+same as 
+[A-F][1-9][0-9]?
 
 
 ## Bonus Two
