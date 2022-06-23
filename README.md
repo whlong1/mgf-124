@@ -43,6 +43,11 @@
 
 # Part Two
 
+There are two ways to model related data in MongoDB:
+
+1. Using **embedding**, where parent documents hold sub-documents.
+2. Using **referencing**, where a document contains just the related document’s `ObjectId`.
+
 Subdocuments are very similar to regular documents. The difference is that they are not saved directly - but instead when the document they are embedded within is saved.
 
 Subdocuments have their own **schema**, but since subdocuments are not saved to a collection, we **do not compile a subdocument’s schema into a Model**

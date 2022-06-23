@@ -24,7 +24,6 @@ const flightSchema = new mongoose.Schema({
 		default: 'DEN'
 	},
 	flightNo: { type: Number, min: 10, max: 9999, required: true },
-	monday: [String],
 	departs: {
 		type: Date,
 		default: function () {
